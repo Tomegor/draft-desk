@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Draft Desk — Essay Feedback</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  {% if mock_mode %}
+  <div class="mock-banner">
+    MOCK MODE — no GEMINI_API_KEY set in .env. You're seeing placeholder feedback so you can test the UI.
+  </div>
+  {% endif %}
+
+  <header class="masthead">
+    <div class="masthead-inner">
+      <span class="eyebrow">draft desk</span>
+      <h1>Your essay, marked up like an editor would.</h1>
+      <p class="sub">Paste your draft. Get margin notes on structure, voice, clichés, and whether you actually answered the prompt.</p>
+    </div>
+  </header>
+
+  <main class="desk">
+    <section class="pane pane-draft">
+      <h2>Your draft</h2>
+      <label for="promptPreset">Common App prompt (or write your own below)</label>
+      <select id="promptPreset">
+        <option value="">— Custom / supplemental prompt —</option>
+      </select>
+
+      <label for="prompt">College prompt</label>
+      <textarea id="prompt" rows="2" placeholder="e.g. Some students have a background that is so central to their identity..."></textarea>
+
+      <label for="wordLimit">Word limit (optional — Common App is 250–650)</label>
+      <input id="wordLimit" type="number" min="1" placeholder="650">
+
+      <label for="essay">Essay text</label>
+      <textarea id="essay" rows="18" placeholder="Paste your draft here..."></textarea>
+
+      <button id="submitBtn" type="button">Mark it up</button>
+      <p id="liveCount" class="live-count">0 words</p>
+    </section>
+
+    <section class="pane pane-notes">
+      <h2>Margin notes</h2>
+      <div id="notesEmpty" class="empty-state">
+        Your feedback will show up here once you submit a draft.
+      </div>
+      <div id="notesContent" class="notes-content" hidden></div>
+    </section>
+  </main>
+
+  <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

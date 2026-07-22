@@ -1,0 +1,191 @@
+:root {
+  --paper: #F3F1EA;
+  --paper-line: #DAD5C6;
+  --ink: #1E2733;
+  --ink-soft: #52606E;
+  --wine: #7A2E2E;
+  --wine-tint: rgba(122, 46, 46, 0.1);
+  --amber: #9C6A22;
+  --amber-tint: rgba(156, 106, 34, 0.12);
+  --sage: #2F6F5E;
+  --sage-tint: rgba(47, 111, 94, 0.1);
+  --font-display: "Fraunces", serif;
+  --font-body: "IBM Plex Sans", sans-serif;
+  --font-mono: "IBM Plex Mono", monospace;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body);
+  line-height: 1.5;
+}
+
+.mock-banner {
+  background: var(--amber);
+  color: #fff;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  text-align: center;
+  padding: 8px 16px;
+}
+
+.masthead {
+  border-bottom: 1px solid var(--paper-line);
+  padding: 48px 24px 32px;
+}
+.masthead-inner { max-width: 1000px; margin: 0 auto; }
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--wine);
+}
+.masthead h1 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  margin: 12px 0 8px;
+  max-width: 20ch;
+}
+.masthead .sub {
+  color: var(--ink-soft);
+  max-width: 52ch;
+  margin: 0;
+}
+
+.desk {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 32px 24px 80px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+}
+@media (max-width: 800px) {
+  .desk { grid-template-columns: 1fr; }
+}
+
+.pane h2 {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin: 0 0 16px;
+}
+
+.pane-draft label {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--ink-soft);
+  margin: 16px 0 6px;
+}
+.pane-draft label:first-of-type { margin-top: 0; }
+
+.pane-draft textarea,
+.pane-draft input,
+.pane-draft select {
+  width: 100%;
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  color: var(--ink);
+  background: #fff;
+  border: 1px solid var(--paper-line);
+  border-radius: 4px;
+  padding: 10px 12px;
+  resize: vertical;
+}
+.pane-draft textarea:focus,
+.pane-draft input:focus,
+.pane-draft select:focus {
+  outline: 2px solid var(--wine);
+  outline-offset: 1px;
+}
+
+#submitBtn {
+  margin-top: 20px;
+  background: var(--ink);
+  color: var(--paper);
+  border: none;
+  border-radius: 4px;
+  padding: 12px 22px;
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 0.95rem;
+  cursor: pointer;
+}
+#submitBtn:hover { background: var(--wine); }
+#submitBtn:disabled { opacity: 0.6; cursor: wait; }
+
+.live-count {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--ink-soft);
+  margin-top: 8px;
+}
+
+.pane-notes {
+  border-left: 1px solid var(--paper-line);
+  padding-left: 32px;
+}
+@media (max-width: 800px) {
+  .pane-notes { border-left: none; border-top: 1px solid var(--paper-line); padding-left: 0; padding-top: 32px; }
+}
+
+.empty-state {
+  color: var(--ink-soft);
+  font-style: italic;
+  border: 1px dashed var(--paper-line);
+  border-radius: 6px;
+  padding: 24px;
+  text-align: center;
+}
+
+.note-card {
+  border-left: 3px solid var(--ink-soft);
+  background: #fff;
+  border-radius: 0 6px 6px 0;
+  padding: 12px 16px;
+  margin-bottom: 14px;
+}
+.note-card.cliche { border-left-color: var(--wine); background: var(--wine-tint); }
+.note-card.tell { border-left-color: var(--amber); background: var(--amber-tint); }
+.note-card.strength { border-left-color: var(--sage); background: var(--sage-tint); }
+
+.note-label {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--ink-soft);
+  margin-bottom: 4px;
+}
+.note-quote {
+  font-style: italic;
+  margin: 0 0 6px;
+}
+.note-body { margin: 0; font-size: 0.9rem; }
+
+.summary-block { margin-bottom: 24px; }
+.summary-block h3 {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--ink-soft);
+  margin: 0 0 6px;
+}
+.score-badge {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-weight: 500;
+  padding: 2px 8px;
+  border-radius: 4px;
+  background: var(--ink);
+  color: var(--paper);
+  font-size: 0.8rem;
+}
