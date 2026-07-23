@@ -54,7 +54,7 @@ first commit that `.env` isn't listed as a tracked file.
 
 ## Rate limiting
 
-The `/api/feedback` endpoint is limited to 15 requests/hour per visitor
+The `/api/feedback` endpoint is limited to 5 requests/hour per visitor
 (see `app.py`, uses Flask-Limiter). This protects your API quota/cost once
 the app is public. Adjust the number in `app.py` if you want it looser or
 stricter.
