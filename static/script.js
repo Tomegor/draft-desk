@@ -6,6 +6,8 @@ const submitBtn = document.getElementById("submitBtn");
 const liveCount = document.getElementById("liveCount");
 const notesEmpty = document.getElementById("notesEmpty");
 const notesContent = document.getElementById("notesContent");
+const annotatedSection = document.getElementById("annotatedSection");
+const annotatedText = document.getElementById("annotatedText");
 
 // Common App essay prompts, 2026-2027 cycle (unchanged from prior years).
 // Paraphrased in plain language -- word limit is 250-650 for all of them.
@@ -70,6 +72,44 @@ function escapeHtml(str) {
     .replace(/&/g, "&amp;")
     .replace(/</g, "&lt;")
     .replace(/>/g, "&gt;");
+}
+
+function escapeAttr(str) {
+  return escapeHtml(str).replace(/"/g, "&quot;");
+}
+
+function buildAnnotatedHtml(essay, cliches, showDontTell) {
+  const matches = [];
+
+  (cliches || []).forEach((c) => {
+    const idx = essay.indexOf(c.quote);
+    if (idx !== -1 && c.quote) {
+      matches.push({ idx, len: c.quote.length, cls: "cliche-mark", label: "Cliché", note: c.why });
+    }
+  });
+
+  (showDontTell || []).forEach((t) => {
+    const idx = essay.indexOf(t.quote);
+    if (idx !== -1 && t.quote) {
+      matches.push({ idx, len: t.quote.length, cls: "tell-mark", label: "Show, don't tell", note: t.suggestion });
+    }
+  });
+
+  matches.sort((a, b) => a.idx - b.idx);
+
+  let html = "";
+  let cursor = 0;
+  matches.forEach((m) => {
+    if (m.idx < cursor) return; // overlapping match, skip it
+    html += escapeHtml(essay.slice(cursor, m.idx));
+    const excerpt = essay.slice(m.idx, m.idx + m.len);
+    const tooltip = `${m.label}: ${m.note || ""}`;
+    html += `<mark class="${m.cls}" title="${escapeAttr(tooltip)}">${escapeHtml(excerpt)}</mark>`;
+    cursor = m.idx + m.len;
+  });
+  html += escapeHtml(essay.slice(cursor));
+
+  return html;
 }
 
 function renderNotes(data) {
@@ -158,10 +198,13 @@ submitBtn.addEventListener("click", async () => {
       throw new Error(data.error || "Something went wrong.");
     }
     renderNotes(data);
+    annotatedText.innerHTML = buildAnnotatedHtml(essay, data.cliches, data.show_dont_tell);
+    annotatedSection.hidden = false;
   } catch (err) {
     notesContent.innerHTML = `<div class="note-card cliche"><p class="note-body">${escapeHtml(err.message)}</p></div>`;
     notesContent.hidden = false;
     notesEmpty.hidden = true;
+    annotatedSection.hidden = true;
   } finally {
     submitBtn.disabled = false;
     submitBtn.textContent = "Mark it up";
