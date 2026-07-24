@@ -15,7 +15,7 @@ cp .env.example .env
 python app.py
 ```
 
-Open http://localhost:5000
+Open [http://localhost:5000](https://draft-desk.onrender.com)
 
 ## Mock mode
 
